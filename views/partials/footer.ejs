@@ -1,66 +1,111 @@
-<footer>
+<footer class="bg-gray-800 text-white py-10 px-8 mt-auto">
   <div class="container mx-auto py-4">
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-10">
       <div class="">
-        <h3 class="text-3xl font-display font-bold mb-8 ">The <span class="text-teal-400">Unpayed</span> CEO</h3>
-        <p class="text-xl text-gray-300 mb-4">Empowering women to lead their lives and businesses with confidence.</p>
-        <div class="flex space-x-4">
-          <a href="/" class="text-3xl text-gray-300 hover:text-teal-400 transition-colors"><i class='bx bxl-instagram'></i></a>
-          <a href="/" class="text-3xl text-gray-300 hover:text-teal-400 transition-colors"><i class='bx bxl-twitter' ></i></a>
-          <a href="/" class="text-3xl text-gray-300 hover:text-teal-400 transition-colors"><i class='bx bxl-linkedin'></i></a>
-          <a href="/" class="text-3xl text-gray-300 hover:text-teal-400 transition-colors"></a>
-          <a href="/" class="text-3xl text-gray-300 hover:text-teal-400 transition-colors"><i class='bx bxl-facebook' ></i></a>
+        <div class="flex items-center mb-4">
+          <img src="/images/logo.png" alt="GameVerz logo" class="w-1/8" />
+          <span
+            class="text-3xl font-display font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan via-blue to-pink"
+            >GameVerz</span
+          >
         </div>
+        <p class="text-xl text-gray-400 mb-4">Explore the Gaming Universe.</p>
+        <p class="text-xl text-gray-400 mb-4">
+          GameVerz is the ultimate destination for exploring video games across
+          platforms, genres, and ratings.
+        </p>
       </div>
       <div class="">
-        <h3 class="text-2xl font-display font-bold mb-8 tracking-wider">Quick Links</h3>
-        <ul class="space-y-2">
-          <li><a href="/" class="text-gray-300 text-2xl hover:text-teal-400 transition-colors">Home</a></li>
-          <li><a href="/about" class="text-gray-300 text-2xl hover:text-teal-400 transition-colors">About</a></li>
-          <li><a href="/posts" class="text-gray-300 text-2xl hover:text-teal-400 transition-colors">Blog</a></li>
-          <li><a href="/resources" class="text-gray-300 text-2xl hover:text-teal-400 transition-colors">Resources</a></li>
-          <li><a href="/contact" class="text-gray-300 text-2xl hover:text-teal-400 transition-colors">Contact</a></li>
+        <h3
+          class="text-3xl font-display text-gray-300 font-bold mb-8 tracking-wider"
+        >
+          Quick Links
+        </h3>
+        <ul class="space-y-2 text-gray-400 text-lg">
+          <li>
+            <a href="/" class="hover:text-blue transition-colors">Home</a>
+          </li>
+          <li>
+            <a href="/genres" class="hover:text-blue transition-colors"
+              >Genres</a
+            >
+          </li>
+          <li>
+            <a href="/top-rated" class="hover:text-blue transition-colors"
+              >Top Rated</a
+            >
+          </li>
+          <li>
+            <a href="/new-releases" class="hover:text-blue transition-colors"
+              >New Releases</a
+            >
+          </li>
         </ul>
       </div>
       <div class="">
-        <h3 class="text-2xl font-display font-bold mb-8 tracking-wider">Newsletter</h3>
-        <p class="text-xl text-gray-300 mb-4">Subscribe to get the latest updates and resources.</p>
-        <form action="/subscribe" method="POST">
-          <div class="flex mb-3">
-            <input type="email" class="bg-white px-4 py-4 w-full rounded-l-md focus:outline-none text-gray-400" id="email" name="email" placeholder="Enter your email" required />
-            <button type="submit" class="bg-teal-400 text-white px-4 py-4 rounded-r-md hover:bg-opacity-90 transition-colors">Subscribe</button>
+        <h3
+          class="text-3xl font-display text-gray-300 font-bold mb-8 tracking-wider"
+        >
+          Connect
+        </h3>
+        <div class="flex space-x-6">
+          <a href="#" class="text-gray-400 hover:text-blue">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-twitch h-12 w-12" viewBox="0 0 24 24">
+              <path d="M3.857 0 1 2.857v10.286h3.429V16l2.857-2.857H9.57L14.714 8V0zm9.714 7.429-2.285 2.285H9l-2 2v-2H4.429V1.143h9.142z"/>
+              <path d="M11.857 3.143h-1.143V6.57h1.143zm-3.143 0H7.571V6.57h1.143z"/>
+            </svg>
+          </a> 
+          <a href="#" class="text-gray-400 hover:text-blue">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-twitter-x h-10 w-10" viewBox="0 0 24 24">
+              <path d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.601.75Zm-.86 13.028h1.36L4.323 2.145H2.865z"/>
+            </svg>
+          </a>
+          <a href="#" class="text-gray-400 hover:text-blue" >
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github h-8 w-8">
+              <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path>
+              <path d="M9 18c-4.51 2-5-2-7-2"></path></svg>
+          </a>
+          
+          
+          <!-- <a href="#" class="text-gray-400 hover:text-blue">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-linkedin h-8 w-8">
+              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+              <rect width="4" height="12" x="2" y="9"></rect>
+              <circle cx="4" cy="4" r="2"></circle>
+            </svg>
+          </a> -->
+          
           </div>
-        </form> 
       </div>
     </div>
-    <div class="border-t border-gray-600 mt-8 pt-6 text-center text-md text-gray-400">
+    <div
+      class="border-t border-gray-600 mt-8 pt-6 text-center text-md text-gray-400"
+    >
       <!-- Dynamic date -->
-      <% const d = new Date() %>
-      <% const year = d.getFullYear() %>
-      <p>Copyright &copy; <%= year %> The Unpayed CEO. All rights reserved</p>
+      <% const d = new Date() %> <% const year = d.getFullYear() %>
+      <p>Copyright &copy; <%= year %> GameVerz. All rights reserved</p>
     </div>
   </div>
 </footer>
 <!-- Toggle function for the mobile menu visibility -->
 <script>
   // Wait for the HTML document to be fully loaded before executing the code
-  document.addEventListener('DOMContentLoaded', function() {
-
+  document.addEventListener("DOMContentLoaded", function () {
     //Get references to DOM elements:
-    const menuButton = document.getElementById('menuButton'); //button to trigger menu toggle
-    const mobileMenu = document.getElementById('mobileMenu'); //mobile menu to be shown/hidden
-    const menuIcon = document.getElementById('menuIcon'); // icon representing the "menu" state
-    const closeIcon = document.getElementById('closeIcon'); // icon representing the "close" state
-    
-    menuButton.addEventListener('click', function() {
+    const menuButton = document.getElementById("menuButton"); //button to trigger menu toggle
+    const mobileMenu = document.getElementById("mobileMenu"); //mobile menu to be shown/hidden
+    const menuIcon = document.getElementById("menuIcon"); // icon representing the "menu" state
+    const closeIcon = document.getElementById("closeIcon"); // icon representing the "close" state
+
+    menuButton.addEventListener("click", function () {
       // When clicked, toggle the 'hidden' class on the mobile menu. This will show/hide the menu depending on its current state
-      mobileMenu.classList.toggle('hidden');
-      
+      mobileMenu.classList.toggle("hidden");
+
       // Toggle the visibility of the menu and close icons:
       // - If menu icon is visible, hide it and show close icon
       // - If close icon is visible, hide it and show menu icon
-      menuIcon.classList.toggle('hidden');
-      closeIcon.classList.toggle('hidden');
+      menuIcon.classList.toggle("hidden");
+      closeIcon.classList.toggle("hidden");
     });
   });
 </script>
