@@ -1,0 +1,66 @@
+<footer>
+  <div class="container mx-auto py-4">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-10">
+      <div class="">
+        <h3 class="text-3xl font-display font-bold mb-8 ">The <span class="text-teal-400">Unpayed</span> CEO</h3>
+        <p class="text-xl text-gray-300 mb-4">Empowering women to lead their lives and businesses with confidence.</p>
+        <div class="flex space-x-4">
+          <a href="/" class="text-3xl text-gray-300 hover:text-teal-400 transition-colors"><i class='bx bxl-instagram'></i></a>
+          <a href="/" class="text-3xl text-gray-300 hover:text-teal-400 transition-colors"><i class='bx bxl-twitter' ></i></a>
+          <a href="/" class="text-3xl text-gray-300 hover:text-teal-400 transition-colors"><i class='bx bxl-linkedin'></i></a>
+          <a href="/" class="text-3xl text-gray-300 hover:text-teal-400 transition-colors"></a>
+          <a href="/" class="text-3xl text-gray-300 hover:text-teal-400 transition-colors"><i class='bx bxl-facebook' ></i></a>
+        </div>
+      </div>
+      <div class="">
+        <h3 class="text-2xl font-display font-bold mb-8 tracking-wider">Quick Links</h3>
+        <ul class="space-y-2">
+          <li><a href="/" class="text-gray-300 text-2xl hover:text-teal-400 transition-colors">Home</a></li>
+          <li><a href="/about" class="text-gray-300 text-2xl hover:text-teal-400 transition-colors">About</a></li>
+          <li><a href="/posts" class="text-gray-300 text-2xl hover:text-teal-400 transition-colors">Blog</a></li>
+          <li><a href="/resources" class="text-gray-300 text-2xl hover:text-teal-400 transition-colors">Resources</a></li>
+          <li><a href="/contact" class="text-gray-300 text-2xl hover:text-teal-400 transition-colors">Contact</a></li>
+        </ul>
+      </div>
+      <div class="">
+        <h3 class="text-2xl font-display font-bold mb-8 tracking-wider">Newsletter</h3>
+        <p class="text-xl text-gray-300 mb-4">Subscribe to get the latest updates and resources.</p>
+        <form action="/subscribe" method="POST">
+          <div class="flex mb-3">
+            <input type="email" class="bg-white px-4 py-4 w-full rounded-l-md focus:outline-none text-gray-400" id="email" name="email" placeholder="Enter your email" required />
+            <button type="submit" class="bg-teal-400 text-white px-4 py-4 rounded-r-md hover:bg-opacity-90 transition-colors">Subscribe</button>
+          </div>
+        </form> 
+      </div>
+    </div>
+    <div class="border-t border-gray-600 mt-8 pt-6 text-center text-md text-gray-400">
+      <!-- Dynamic date -->
+      <% const d = new Date() %>
+      <% const year = d.getFullYear() %>
+      <p>Copyright &copy; <%= year %> The Unpayed CEO. All rights reserved</p>
+    </div>
+  </div>
+</footer>
+<!-- Toggle function for the mobile menu visibility -->
+<script>
+  // Wait for the HTML document to be fully loaded before executing the code
+  document.addEventListener('DOMContentLoaded', function() {
+
+    //Get references to DOM elements:
+    const menuButton = document.getElementById('menuButton'); //button to trigger menu toggle
+    const mobileMenu = document.getElementById('mobileMenu'); //mobile menu to be shown/hidden
+    const menuIcon = document.getElementById('menuIcon'); // icon representing the "menu" state
+    const closeIcon = document.getElementById('closeIcon'); // icon representing the "close" state
+    
+    menuButton.addEventListener('click', function() {
+      // When clicked, toggle the 'hidden' class on the mobile menu. This will show/hide the menu depending on its current state
+      mobileMenu.classList.toggle('hidden');
+      
+      // Toggle the visibility of the menu and close icons:
+      // - If menu icon is visible, hide it and show close icon
+      // - If close icon is visible, hide it and show menu icon
+      menuIcon.classList.toggle('hidden');
+      closeIcon.classList.toggle('hidden');
+    });
+  });
+</script>

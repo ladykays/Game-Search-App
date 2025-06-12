@@ -8,8 +8,9 @@ const port = 3000;
 const RAWG_API_KEY = process.env.RAWG_API_KEY;
 const BASEURL = "https://api.rawg.io/api/";
 
+app.set('view engine', 'ejs');
 app.use(express.static("public"));
-app.use(bodyParser.urlencoded({ extnded: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
  
 //Home Page
 app.get("/", (req, res) => {
