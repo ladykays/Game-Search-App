@@ -1,0 +1,38 @@
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+  <% if (topRated) { %>
+    <% topRated.forEach((game) => { %>
+      <a class="group" href>
+        <ul>
+          <li class="text-white list-none">
+            <img src="<%= game.background_image %>" alt="<%= game.name %>" class="w-full h-48 object-cover" />
+            <h3><%= game.name %></h3>
+            <div class="flex justify-between text-lg">
+              <p class="text-gray-200">
+                <span class="text-amber-400">☆</span> <%= game.rating %>
+              </p>
+              <p class="text-gray-300"><%= game.released %></p>
+            </div>
+            <div class="flex flex-wrap gap-1 mt-3">
+              <% if (game.genres) { %>
+                <% game.genres.forEach((genre) => { %>
+                  <span class="px-2 py-1 text-xs rounded-full bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200">
+                    <%= genre.name %>
+                  </span>
+                <% }) %>
+              <% } %>
+            </div>
+            <div class="mt-3 flex flex-wrap gap-1">
+              <% if (game.platforms && game.platforms.length > 0) { %>
+                <% game.platforms.forEach((p) => { %>
+                  <span class="px-2 py-1 text-xs rounded-full bg-gray-700 text-gray-200">
+                    <%= p.platform.name %>
+                  </span>
+                <% }) %>
+              <% } %>
+            </div>
+          </li>
+        </ul>
+      </a>
+    <% }) %>
+  <% } %>  
+</div>
