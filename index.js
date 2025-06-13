@@ -30,8 +30,13 @@ app.get("/", async(req, res) => {
   // Get date 30 days ago
   const thirtyDaysAgo = new Date();
   thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+  // 1 year ago
   const oneYearAgo = new Date ();
   oneYearAgo.setDate(oneYearAgo.getDate() - 365);
+  //2 years from now
+  const twoYearsLater = new Date();
+  twoYearsLater.setFullYear(twoYearsLater.getFullYear() + 2);
+
   
   const formatDate  = (date) => {
     const year = date.getFullYear();
@@ -42,6 +47,7 @@ app.get("/", async(req, res) => {
 
   const past30Days = formatDate(thirtyDaysAgo);
   const pastYear = formatDate(oneYearAgo);
+  const in2Years = formatDate(twoYearsLater);
 
   try {
     //console.log("API Key:", RAWG_API_KEY);
@@ -63,14 +69,24 @@ app.get("/", async(req, res) => {
       return topRated;
     }
 
-    const [topRated, newReleases] = await Promise.all([
+    //Helper function to fetch Upcoming Games
+    const getUpcomingGames = async () => {
+      const response = await axios.get(`${BASEURL}/games?key=${RAWG_API_KEY}&ordering=released&dates=${currentDate},${in2Years}&page_size=6`);
+      const upComing = response.data.results;
+      console.log({upComing})
+      return upComing;
+    }
+
+    const [topRated, newReleases, upComing] = await Promise.all([
       getTopRatedGames(),
       getNewReleases(),
+      getUpcomingGames(),
     ])
     
     res.render("index.ejs", { 
       topRated: topRated,
       newReleases: newReleases,
+      upComing: upComing,
     });
 
   } catch (error) {
