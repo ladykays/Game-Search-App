@@ -1,8 +1,124 @@
 <%- include("partials/header.ejs") %>
+  <main class="flex-grow font-inter">
+    <div class="min-h-screen">
+      <!-- Hero Section -->
+      <section class="relative bg-gradient-to-r from-blue  to-pink py-24 px-4 sm:px-6 lg:px-8">
+        <!-- Black overlay at 30% opacity -->
+        <div class="absolute inset-0 bg-black opacity-30 "></div>
 
-  <main>
+        <div class="relative max-w-6xl mx-auto text-center text-white py-24 px-4 sm:px-6 lg:px-8">
+          <h1 class="text-4xl font-inter font-extrabold tracking-wide sm:text-5xl md:text-7xl">Discover Your Next Gaming Adventure</h1>
+          <p class="mt-6 text-xl max-w-2xl mx-auto">Explore thousands of games across all platforms, genres, and ratings. Find your next favorite game today.</p>
+          <form class="mt-8 sm:flex sm:justify-center">
+            <div class="w-full sm:max-w-lg">
+              <div class="flex items-center">
+                <input
+                  type="text"
+                  name="search"
+                  placeholder="Search for games..."
+                  class="py-3 px-5 block w-full bg-white rounded-l-full border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-gray-900"
+                />
+                <button type="submit" class="p-3 rounded-r-full bg-indigo-800 hover:bg-indigo-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search h-6 w-6">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.3-4.3"></path>
+                  </svg>
+                </button>
+              </div>
+            </div>
+            
+          </form>
+        </div>
+        
+      </section>
 
+      <!-- New Realeses Section -->
+      <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div class="flex justify-between items-center mb-6">
+          <h2 class="text-3xl font-bold text-gray-100">New Releases</h2>
+          <a href="/" class="flex items-center text-cyan-600 hover:text-blue-300 text-lg">View All
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+            </svg>
+          </a>
+
+        </div>
+
+        <!-- Grid for game cards -->
+        <%- include("partials/gamecard.ejs", {games: newReleases}) %>
+      </section>
+
+      <!-- Top Rated Games Section -->
+      <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div class="flex justify-between items-center mb-6">
+          <h2 class="text-3xl font-bold text-gray-100">Top Rated Games</h2>
+          <a href="/" class="flex items-center text-cyan-600 hover:text-blue-300 text-lg">View All
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+            </svg>
+          </a>
+
+        </div>
+
+        <!-- Grid for game cards -->
+        <%- include("partials/gamecard.ejs", {games: topRated}) %>
+      </section>
+      
+        
+      <!-- Upcoming Games Section -->
+      <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div class="flex justify-between items-center mb-6">
+          <h2 class="text-3xl font-bold text-gray-100">Upcoming Games</h2>
+          <a href="/" class="flex items-center text-cyan-600 hover:text-blue-300 text-lg">View All
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+            </svg>
+          </a>
+
+        </div>
+
+        <!-- Grid for game cards -->
+        <%- include("partials/gamecard.ejs", {games: upComing}) %>
+      </section>
+
+      <!-- Categories Section -->
+       <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+          <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8" >
+            <a class="block group" href="/search?genre=action">
+              <div class="relative h-64 rounded-lg overflow-hidden shadow-md" >
+                <img src="./images/action.jpg" alt="Action Games" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300" />
+                <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent" ></div>
+                <div class="absolute bottom-0 left-0 p-6" >
+                  <h3 class="text-xl font-bold text-white">Action Games</h3>
+                  <p class="text-gray-300 mt-1" >Explore action-packed adventures</p>
+                </div>
+              </div>
+            </a>
+            <a class="block group" href="/search?genre=rpg">
+              <div class="relative h-64 rounded-lg overflow-hidden shadow-md" >
+                <img src="./images/rpg.jpg" alt="RPG Games" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300><div class="absolute inset-0 bg-gradient-to-t from-black to-transparent" />
+
+                <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent" ></div>
+                <div class="absolute bottom-0 left-0 p-6">
+                  <h3 class="text-xl font-bold text-white">RPG Games</h3>
+                  <p class="text-gray-300 mt-1">Embark on epic role-playing journeys</p>
+                </div>
+              </div>
+            </a>
+            <a class="block group" href="/search?genre=strategy">
+              <div class="relative h-64 rounded-lg overflow-hidden shadow-md" >
+                <img src="./images/strategy.jpg" alt="Strategy Games" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300" >
+                <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
+                <div class="absolute bottom-0 left-0 p-6">
+                  <h3 class="text-xl font-bold text-white">Strategy Games</h3>
+                  <p class="text-gray-300 mt-1">Test your tactical thinking</p>
+                </div>
+              </div>
+            </a>
+          </div>
+       </section>
+    </div> 
   </main>
+  <%- include("partials/footer.ejs") %>
 </body>
 
-<%- include("partials/footer.ejs") %>
