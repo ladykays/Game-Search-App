@@ -1,8 +1,12 @@
 import express from "express";
-import { getHomePage } from "../controllers/gameController.js";
+import { 
+  getHomePage, 
+  getResultsPage 
+} from "../controllers/gameController.js";
 
 const router = express.Router();
 
 router.get("/", getHomePage);
+router.get("/results", getResultsPage);
 
 export  default router;
