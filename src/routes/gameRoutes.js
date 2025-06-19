@@ -2,7 +2,7 @@ import express from "express";
 import { 
   getHomePage, 
   getResultsPage,
-  getGamePage, 
+  getGamePage,
 } from "../controllers/gameController.js";
 
 const router = express.Router();

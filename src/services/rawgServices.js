@@ -108,19 +108,23 @@ export const getGameDetails = async (id) => {
   const response = await axios.get(`${BASEURL}/games/${id}`, {params});
   const gameDetails = response.data;
 
-  //Trying to add video
-  /* const [gameResponse, videoResponse] = await Promise.all([
-    axios.get(`${BASEURL}/games/${id}`, {params}),
-    axios.get(`${BASEURL}/games/${id}/movies`, {params})
-  ]);
-  console.log("Video Data: ", videoResponse.data.results)
-
-  //Copy all properties from gameResponse.data into the new gameDetails object and add videos ppty to it
-  const gameDetails = {
-    ...gameResponse.data,
-    videos: videoResponse.data.results || []
-  }; */
-
   console.log("Game Details: ", {gameDetails})
   return gameDetails;
 };
+
+//Function to get screenshots
+export const getScreenshots = async (game_pk) => {
+ const params = {
+  key: RAWG_API_KEY,
+ }
+
+ try {
+  const response = await axios.get(`${BASEURL}/games/${game_pk}/screenshots`, {params})
+  const screenshots = response.data.results;
+  console.log("Screenshots:", screenshots);
+  return screenshots;
+ } catch (error) {
+    console.error("Error fetching screenshots:", error);
+    throw error;
+ }
+}

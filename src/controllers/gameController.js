@@ -4,6 +4,7 @@ import {
   getUpcomingGames,
   getAllGames,
   getGameDetails,
+  getScreenshots,
 } from "../services/rawgServices.js";
 
 //Homepage
@@ -64,17 +65,26 @@ export const getResultsPage = async (req, res) => {
 //Individual Game Page
 export const getGamePage = async(req, res) => {
   try {
-    const { id } = req.params
+    const { id } = req.params;
+    const { game_pk } = req.params;
 
     if (!id) {
       return res.status(400).send("Game ID is required");
     }
 
-    const gameDetails = await getGameDetails(id);
-    res.render("game.ejs", {gameDetails})
+    //fetch gameDetails and screenshot in parallel
+    const [gameDetails, screenshots] = await Promise.all([
+      getGameDetails(id),
+      getScreenshots(id, game_pk)
+    ]);
+    res.render("game.ejs", {
+      gameDetails,
+      screenshots: screenshots || [] // Ensure screenshots is always an array
+    })
 
   } catch (error) {
     console.log("Error fetching game details", error)
     res.status(500).send(`Error loading game: ${error.message}`)
   }
 }
+
