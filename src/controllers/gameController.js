@@ -2,6 +2,8 @@ import {
   getTopRatedGames,
   getNewReleases,
   getUpcomingGames,
+  getAllGames,
+  getGameDetails,
 } from "../services/rawgServices.js";
 
 //Homepage
@@ -29,11 +31,50 @@ export const getHomePage = async(req, res) => {
 // Results page
 export const getResultsPage = async (req, res) => {
   try {
-    const newReleases = await getNewReleases();
-    console.log("New Releases:", newReleases )
-    res.render("results.ejs", { newReleases: newReleases });
+    let games;
+    let title;
+    
+    if (req.query.filter === "newReleases") {
+      games = await getNewReleases();
+      title = "New Releases";
+    }
+    else if (req.query.filter === "topRated") {
+      games = await getTopRatedGames();
+      title = "Top Rated Games";
+    }
+    else if (req.query.filter === "upComing") {
+      games = (await getUpcomingGames()).filter(game => game.background_image); //only get games with a background image
+      title = "Upcoming Games";
+    } else {
+      games = await getAllGames();
+      title = "Browse All Games";
+    }
+    res.render("results.ejs", {
+      games,
+      title
+    });
+    
+    
   } catch (error) {
     console.error("Error fetching data", error)
     res.status(500).send("Something went wrong");
+  }
+}
+
+//Individual Game Page
+export const getGamePage = async(req, res) => {
+  try {
+    const { id } = req.params
+
+    if (!id) {
+      return res.status(400).send("Game ID is required");
+    }
+
+    const gameDetails = await getGameDetails(id);
+    res.render("game.ejs", {gameDetails})
+
+  } catch (error) {
+    console.log("Error fetching game details", error)
+    res.status(500).send(`Error loading game: ${error.message}`)
   }
 }

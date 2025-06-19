@@ -21,7 +21,10 @@ export const getDateRange = () => {
   thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
   
   const oneYearAgo = new Date ();
-  oneYearAgo.setDate(oneYearAgo.getDate() - 365);
+  oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
+
+  const fiveYearsAgo = new Date ();
+  fiveYearsAgo.setFullYear(fiveYearsAgo.getFullYear() - 5);
   
   const twoYearsLater = new Date();
   twoYearsLater.setFullYear(twoYearsLater.getFullYear() + 2);
@@ -30,6 +33,7 @@ export const getDateRange = () => {
     currentDate,
     past30Days: formatDate(thirtyDaysAgo),
     pastYear: formatDate(oneYearAgo),
+    past5Years: formatDate(fiveYearsAgo),
     in2Years: formatDate(twoYearsLater),
   };  
 };
