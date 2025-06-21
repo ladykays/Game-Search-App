@@ -128,3 +128,36 @@ export const getScreenshots = async (game_pk) => {
     throw error;
  }
 }
+
+//Function to get genres
+export const getGenres = async (limit = null) => {
+  const params = {
+    key:RAWG_API_KEY,
+  }
+
+  if (limit) {
+    params.page_size = limit;
+  }
+  try {
+    const response = await axios.get(`${BASEURL}/genres`, {params});
+    const genres = response.data.results;
+    //console.log({genres})
+    return genres;
+  } catch (error) {
+    console.error("Error fetching genres:", error);
+    throw error;
+  }
+}
+
+//Function to get a particular genre
+export const getFilterByGenre = async (id) => {
+  const params = {
+    key: RAWG_API_KEY,
+  };
+
+  const response = await axios.get(`${BASEURL}/genres/${id}`, {params});
+  const filteredGenres = response.data;
+  console.log({filteredGenres});
+  return filteredGenres;
+
+}

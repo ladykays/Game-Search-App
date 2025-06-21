@@ -5,21 +5,25 @@ import {
   getAllGames,
   getGameDetails,
   getScreenshots,
+  getGenres,
+  getFilterByGenre,
 } from "../services/rawgServices.js";
 
 //Homepage
 export const getHomePage = async(req, res) => {
   try {
-    const [topRated, newReleases, upComing] = await Promise.all([
+    const [topRated, newReleases, upComing, genres] = await Promise.all([
       getTopRatedGames(6), // Returns 6 top rated games
       getNewReleases(6), // Returns 6 most recent releases
       getUpcomingGames(6), // Returns 6 most recent upcoming games
+      getGenres(3), //Get 3 genres
     ])
     
     res.render("index.ejs", { 
       topRated: topRated,
       newReleases: newReleases,
       upComing: upComing,
+      genres,
     });
 
   } catch (error) {
@@ -88,3 +92,33 @@ export const getGamePage = async(req, res) => {
   }
 }
 
+//Genres Page
+export const getGenresPage = async(req, res) => {
+  try {
+    const genres = await getGenres();
+    res.render("genres.ejs", {genres})
+  } catch (error) {
+    console.log("Error fetching genres", error)
+    res.status(500).send(`Error fetching genres: ${error.message}`)
+  }
+}
+
+//Search Page
+export const getSearchPage = async(req, res) => {
+  try {
+    const {genre} = req.query;
+    const [filteredGenre, topRated] = await Promise.all([
+      getFilterByGenre(genre),
+      getTopRatedGames(2),
+    ]);
+
+    res.render("search.ejs", {
+      filteredGenre,
+      topRated: topRated,
+    } )
+
+  } catch (error) {
+    console.log("Error fetching requested games", error)
+    res.status(500).send(`Error fetching requested games: ${error.message}`)
+  }
+}

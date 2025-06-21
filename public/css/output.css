@@ -16,10 +16,8 @@
     --color-yellow-500: oklch(79.5% 0.184 86.047);
     --color-green-500: oklch(72.3% 0.219 149.579);
     --color-cyan-600: oklch(60.9% 0.126 221.723);
-    --color-blue-100: oklch(93.2% 0.032 255.585);
     --color-blue-300: oklch(80.9% 0.105 251.813);
     --color-blue-800: oklch(42.4% 0.199 265.638);
-    --color-blue-900: oklch(37.9% 0.146 265.522);
     --color-indigo-200: oklch(87% 0.065 274.039);
     --color-indigo-400: oklch(67.3% 0.182 276.935);
     --color-indigo-500: oklch(58.5% 0.233 277.117);
@@ -28,7 +26,6 @@
     --color-indigo-800: oklch(39.8% 0.195 277.366);
     --color-indigo-900: oklch(35.9% 0.144 278.697);
     --color-pink-500: oklch(65.6% 0.241 354.308);
-    --color-pink-700: oklch(52.5% 0.223 3.958);
     --color-gray-50: oklch(98.5% 0.002 247.839);
     --color-gray-100: oklch(96.7% 0.003 264.542);
     --color-gray-200: oklch(92.8% 0.006 264.531);
@@ -65,7 +62,7 @@
     --text-5xl--line-height: 1;
     --text-7xl: 4.5rem;
     --text-7xl--line-height: 1;
-    --font-weight-light: 300;
+    --font-weight-normal: 400;
     --font-weight-medium: 500;
     --font-weight-semibold: 600;
     --font-weight-bold: 700;
@@ -260,29 +257,8 @@
   .left-0 {
     left: calc(var(--spacing) * 0);
   }
-  .z-10 {
-    z-index: 10;
-  }
   .z-50 {
     z-index: 50;
-  }
-  .container {
-    width: 100%;
-    @media (width >= 40rem) {
-      max-width: 40rem;
-    }
-    @media (width >= 48rem) {
-      max-width: 48rem;
-    }
-    @media (width >= 64rem) {
-      max-width: 64rem;
-    }
-    @media (width >= 80rem) {
-      max-width: 80rem;
-    }
-    @media (width >= 96rem) {
-      max-width: 96rem;
-    }
   }
   .mx-auto {
     margin-inline: auto;
@@ -379,6 +355,9 @@
   .h-6 {
     height: calc(var(--spacing) * 6);
   }
+  .h-7 {
+    height: calc(var(--spacing) * 7);
+  }
   .h-8 {
     height: calc(var(--spacing) * 8);
   }
@@ -417,6 +396,9 @@
   }
   .w-6 {
     width: calc(var(--spacing) * 6);
+  }
+  .w-7 {
+    width: calc(var(--spacing) * 7);
   }
   .w-8 {
     width: calc(var(--spacing) * 8);
@@ -515,13 +497,6 @@
       margin-block-end: calc(calc(var(--spacing) * 4) * calc(1 - var(--tw-space-y-reverse)));
     }
   }
-  .space-y-8 {
-    :where(& > :not(:last-child)) {
-      --tw-space-y-reverse: 0;
-      margin-block-start: calc(calc(var(--spacing) * 8) * var(--tw-space-y-reverse));
-      margin-block-end: calc(calc(var(--spacing) * 8) * calc(1 - var(--tw-space-y-reverse)));
-    }
-  }
   .space-x-6 {
     :where(& > :not(:last-child)) {
       --tw-space-x-reverse: 0;
@@ -563,20 +538,11 @@
   .border-gray-600 {
     border-color: var(--color-gray-600);
   }
-  .bg-amber-400 {
-    background-color: var(--color-amber-400);
-  }
   .bg-black {
     background-color: var(--color-black);
   }
   .bg-blue-800 {
     background-color: var(--color-blue-800);
-  }
-  .bg-gray-50 {
-    background-color: var(--color-gray-50);
-  }
-  .bg-gray-100 {
-    background-color: var(--color-gray-100);
   }
   .bg-gray-700 {
     background-color: var(--color-gray-700);
@@ -599,20 +565,11 @@
   .bg-green-500 {
     background-color: var(--color-green-500);
   }
-  .bg-indigo-700 {
-    background-color: var(--color-indigo-700);
-  }
   .bg-indigo-800 {
     background-color: var(--color-indigo-800);
   }
   .bg-indigo-900 {
     background-color: var(--color-indigo-900);
-  }
-  .bg-red-400 {
-    background-color: var(--color-red-400);
-  }
-  .bg-red-500 {
-    background-color: var(--color-red-500);
   }
   .bg-red-700 {
     background-color: var(--color-red-700);
@@ -778,6 +735,10 @@
     --tw-font-weight: var(--font-weight-medium);
     font-weight: var(--font-weight-medium);
   }
+  .font-normal {
+    --tw-font-weight: var(--font-weight-normal);
+    font-weight: var(--font-weight-normal);
+  }
   .font-semibold {
     --tw-font-weight: var(--font-weight-semibold);
     font-weight: var(--font-weight-semibold);
@@ -792,9 +753,6 @@
   }
   .text-amber-400 {
     color: var(--color-amber-400);
-  }
-  .text-black {
-    color: var(--color-black);
   }
   .text-cyan-600 {
     color: var(--color-cyan-600);
@@ -814,9 +772,6 @@
   .text-gray-500 {
     color: var(--color-gray-500);
   }
-  .text-gray-800 {
-    color: var(--color-gray-800);
-  }
   .text-gray-900 {
     color: var(--color-gray-900);
   }
@@ -828,9 +783,6 @@
   }
   .text-indigo-400 {
     color: var(--color-indigo-400);
-  }
-  .text-indigo-600 {
-    color: var(--color-indigo-600);
   }
   .text-pink-500 {
     color: var(--color-pink-500);
@@ -959,13 +911,6 @@
       }
     }
   }
-  .hover\:bg-red-500 {
-    &:hover {
-      @media (hover: hover) {
-        background-color: var(--color-red-500);
-      }
-    }
-  }
   .hover\:text-blue {
     &:hover {
       @media (hover: hover) {
@@ -984,13 +929,6 @@
     &:hover {
       @media (hover: hover) {
         color: var(--color-indigo-200);
-      }
-    }
-  }
-  .hover\:text-indigo-800 {
-    &:hover {
-      @media (hover: hover) {
-        color: var(--color-indigo-800);
       }
     }
   }
@@ -1139,16 +1077,6 @@
       padding-inline: calc(var(--spacing) * 8);
     }
   }
-  .dark\:bg-gray-700 {
-    @media (prefers-color-scheme: dark) {
-      background-color: var(--color-gray-700);
-    }
-  }
-  .dark\:bg-gray-900 {
-    @media (prefers-color-scheme: dark) {
-      background-color: var(--color-gray-900);
-    }
-  }
   .dark\:bg-gray-900\/70 {
     @media (prefers-color-scheme: dark) {
       background-color: color-mix(in srgb, oklch(21% 0.034 264.665) 70%, transparent);
@@ -1162,19 +1090,9 @@
       color: var(--color-gray-100);
     }
   }
-  .dark\:text-gray-200 {
-    @media (prefers-color-scheme: dark) {
-      color: var(--color-gray-200);
-    }
-  }
   .dark\:text-gray-400 {
     @media (prefers-color-scheme: dark) {
       color: var(--color-gray-400);
-    }
-  }
-  .dark\:text-indigo-400 {
-    @media (prefers-color-scheme: dark) {
-      color: var(--color-indigo-400);
     }
   }
   .dark\:hover\:bg-gray-800\/80 {
@@ -1185,15 +1103,6 @@
           @supports (color: color-mix(in lab, red, red)) {
             background-color: color-mix(in oklab, var(--color-gray-800) 80%, transparent);
           }
-        }
-      }
-    }
-  }
-  .dark\:hover\:text-indigo-200 {
-    @media (prefers-color-scheme: dark) {
-      &:hover {
-        @media (hover: hover) {
-          color: var(--color-indigo-200);
         }
       }
     }
