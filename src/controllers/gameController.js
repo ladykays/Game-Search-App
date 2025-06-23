@@ -7,6 +7,8 @@ import {
   getScreenshots,
   getGenres,
   getFilterByGenre,
+  getGamesByGenreSlug,
+  getGamesByPlatform,
 } from "../services/rawgServices.js";
 
 //Homepage
@@ -70,7 +72,8 @@ export const getResultsPage = async (req, res) => {
 export const getGamePage = async(req, res) => {
   try {
     const { id } = req.params;
-    const { game_pk } = req.params;
+    //const { game_pk } = req.params;
+    console.log("Game Page Requested for:", id);
 
     if (!id) {
       return res.status(400).send("Game ID is required");
@@ -79,17 +82,17 @@ export const getGamePage = async(req, res) => {
     //fetch gameDetails and screenshot in parallel
     const [gameDetails, screenshots] = await Promise.all([
       getGameDetails(id),
-      getScreenshots(id, game_pk)
+      getScreenshots(id)
     ]);
     res.render("game.ejs", {
       gameDetails,
-      screenshots: screenshots || [] // Ensure screenshots is always an array
+      screenshots: screenshots || [],// Ensure screenshots is always an array
     })
 
   } catch (error) {
     console.log("Error fetching game details", error)
     res.status(500).send(`Error loading game: ${error.message}`)
-  }
+  }  
 }
 
 //Genres Page
@@ -106,17 +109,56 @@ export const getGenresPage = async(req, res) => {
 //Search Page
 export const getSearchPage = async(req, res) => {
   try {
-    const {genre} = req.query;
-    const [filteredGenre, topRated] = await Promise.all([
+    let {genre} = req.query;
+
+    // Normalize the genre parameter
+    if (typeof genre === 'string') {
+      genre = genre.toLowerCase().replace(/\s+/g, '-');
+    }
+
+    const [filteredGenre, topRated, genreGames] = await Promise.all([
       getFilterByGenre(genre),
       getTopRatedGames(2),
+      getGamesByGenreSlug(genre, 8)
     ]);
 
     res.render("search.ejs", {
       filteredGenre,
       topRated: topRated,
+      genreGames: genreGames || [],
     } )
 
+  } catch (error) {
+    console.log("Error fetching requested games", error)
+    res.status(500).send(`Error fetching requested games: ${error.message}`)
+  }
+};
+
+//Platforms Page
+export const getPlatformsPage = async(req, res) => {
+  try {
+    let games;
+    let title;
+
+    if (req.query.filter === "pcGames") {
+      games = await getGamesByPlatform(4);
+      title = "PC Games"
+    } else if (req.query.filter === "playstation") {
+      // Get games for all PlayStation platforms (PS1-PS5, PSP, Vita)
+      const psPlatformIds = [27, 15, 16, 18, 187, 17, 19]
+      games = await getGamesByPlatform(psPlatformIds.join(','));
+      title = "PlayStation Games"
+    } else if (req.query.filter === "xbox") {
+      // Get games for all XBox platforms (Xbox One, Xbox Series S/X, Xbox 360, Xbox)
+      const xboxPlatformIds = [1, 186, 14, 80 ];
+      games = await getGamesByPlatform(xboxPlatformIds.join(','));
+      title = "Xbox Games"
+    }
+
+    res.render("platforms.ejs", {
+      games,
+      title,
+    });
   } catch (error) {
     console.log("Error fetching requested games", error)
     res.status(500).send(`Error fetching requested games: ${error.message}`)
