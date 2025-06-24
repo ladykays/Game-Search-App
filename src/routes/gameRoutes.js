@@ -4,8 +4,9 @@ import {
   getResultsPage,
   getGamePage,
   getGenresPage,
-  getSearchPage,
-  getPlatformsPage
+  getSearchPage, //for genre search
+  getPlatformsPage, 
+  searchGames, //gor game saerch form
 } from "../controllers/gameController.js";
 
 const router = express.Router();
@@ -16,5 +17,6 @@ router.get("/game/:id", getGamePage);
 router.get("/genres", getGenresPage);
 router.get("/search", getSearchPage);
 router.get("/platforms", getPlatformsPage);
+router.get("/search-games", searchGames);
 
 export  default router;

@@ -9,6 +9,7 @@ import {
   getFilterByGenre,
   getGamesByGenreSlug,
   getGamesByPlatform,
+  getSearchedGames,
 } from "../services/rawgServices.js";
 
 //Homepage
@@ -145,14 +146,19 @@ export const getPlatformsPage = async(req, res) => {
       title = "PC Games"
     } else if (req.query.filter === "playstation") {
       // Get games for all PlayStation platforms (PS1-PS5, PSP, Vita)
-      const psPlatformIds = [27, 15, 16, 18, 187, 17, 19]
+      const psPlatformIds = [27, 15, 16, 18, 187, 17, 19] //.join(',') transforms an array into a comma-separated string. This allows us to pass multiple platform IDs to the API in a single request.
       games = await getGamesByPlatform(psPlatformIds.join(','));
       title = "PlayStation Games"
     } else if (req.query.filter === "xbox") {
       // Get games for all XBox platforms (Xbox One, Xbox Series S/X, Xbox 360, Xbox)
       const xboxPlatformIds = [1, 186, 14, 80 ];
       games = await getGamesByPlatform(xboxPlatformIds.join(','));
-      title = "Xbox Games"
+      title = "Xbox Games";
+    } else if (req.query.filter === "nintendo") {
+      // Get games for all Nintendo platforms (Switch, 3DS, DS, DSi, Wii U, Wii, GameCube, Nintendo 64,Game Boy Advance, Game Boy Color, Game Boy, SNES, NES) 
+      const nintendoPlatformIds = [7, 8, 9, 13, 10, 11, 105, 83, 24, 43, 26, 79, 49];
+      games = await getGamesByPlatform(nintendoPlatformIds.join(',')); 
+      title = "Nintendo Games";
     }
 
     res.render("platforms.ejs", {
@@ -162,5 +168,28 @@ export const getPlatformsPage = async(req, res) => {
   } catch (error) {
     console.log("Error fetching requested games", error)
     res.status(500).send(`Error fetching requested games: ${error.message}`)
+  }
+}
+
+//Search Games
+export const searchGames = async (req, res) => {
+  try {
+    const {search} = req.query;
+
+    if (!search || search.trim() === "") {
+      return res.redirect("/");
+    }
+
+    const games = await getSearchedGames(search, 40) //limit to 40 results
+
+    res.render("search-results.ejs", {
+      title: `Search Results for "${search}"`,
+      games,
+      searchQuery: search, 
+    })
+
+  } catch (error) {
+    console.error('Search error:', error);
+    res.status(500).send('Error performing search');
   }
 }
