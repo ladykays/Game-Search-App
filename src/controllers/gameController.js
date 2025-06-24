@@ -1,3 +1,4 @@
+import e from "express";
 import {
   getTopRatedGames,
   getNewReleases,
@@ -174,18 +175,51 @@ export const getPlatformsPage = async(req, res) => {
 //Search Games
 export const searchGames = async (req, res) => {
   try {
-    const {search} = req.query;
+    const {search, page = 1} = req.query;
+    const limit = 20; //results per page
+    const pageRange = 5; //no of page buttons to show
 
     if (!search || search.trim() === "") {
       return res.redirect("/");
     }
 
-    const games = await getSearchedGames(search, 40) //limit to 40 results
+    const searchData = await getSearchedGames(search, limit, page);
+    const games = searchData.results || [];
+    const count = searchData.count || 0;
+    const totalPages = Math.ceil(count / limit);
+    const currentPage = parseInt(page);
+
+    //Calculate page range to display
+    let startPage;
+    let endPage;
+
+    if(totalPages <= pageRange) {
+      startPage = 1;
+      endPage = totalPages;
+    } else {
+      const halfRange = Math.floor(pageRange / 2);
+      if(currentPage <= halfRange) {
+        startPage = 1;
+        endPage = pageRange;
+      } else if (currentPage + halfRange >= totalPages) {
+        startPage = totalPages - pageRange + 1;
+        endPage = totalPages;
+      } else {
+        startPage = currentPage - halfRange;
+        endPage = currentPage + halfRange;
+      }
+    }
 
     res.render("search-results.ejs", {
       title: `Search Results for "${search}"`,
       games,
       searchQuery: search, 
+      currentPage: parseInt(page),
+      totalPages,
+      startPage,
+      endPage,
+      hasNextPage: parseInt(page) < totalPages,
+      hasPreviousPage: parseInt(page) > 1,
     })
 
   } catch (error) {

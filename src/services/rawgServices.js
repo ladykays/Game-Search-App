@@ -17,6 +17,7 @@ export const getNewReleases = async (limit = null, page = 1) => {
   if (limit) {
     // Recent releases (past 30 days)
     params.dates = `${past30Days},${currentDate}`;
+    //params.dates = `${pastYear},${currentDate}`;
     params.page_size = limit;
   } else {
     // All released games (no future games)
@@ -47,7 +48,8 @@ export const getTopRatedGames = async (limit = null) => {
   };
 
   if (limit) {
-    params.dates = `${past5Years},${currentDate}`;
+    //params.dates = `${past5Years},${currentDate}`;
+    params.dates = `${pastYear},${currentDate}`;
     params.page_size = limit;
   }
   const response = await axios.get(`${BASEURL}/games`, { params });
@@ -203,21 +205,21 @@ export const getSearchedGames = async(query, limit = null, page = 1) => {
     key: RAWG_API_KEY,
     search: query,
     page: page,
+    page_size: limit,
     ordering: "-rating"
-  }
-
-  if (limit) {
-    params.page_size = limit;
   }
 
   try {
     const response = await axios.get(`${BASEURL}/games`, {params});
     console.log("Search: ", response.data.results);
-    return response.data.results;
+    return {
+      results: response.data.results,
+      count: response.data.count, //total no of games
+      next: response.data.next, //url for next page
+      previous: response.data.previous, //ur from prev game
+    }
   } catch (error) {
     console.error("Error searching games:", error);
     throw error;
   }
-  
-
 }
