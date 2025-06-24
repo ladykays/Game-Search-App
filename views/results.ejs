@@ -9,6 +9,12 @@
         
         <%#- include("partials/gamecard.ejs", {games: newReleases}) %>
         <%- include("partials/gameCard.ejs", {games}) %>
+
+        <!-- Pagination Section -->
+        <%- include('partials/pagination', {
+          baseUrl: '/results',
+          queryParams: { filter: filter }
+        }) %>
       </div>
     </div>
     

@@ -9,3 +9,32 @@
   max-height: 500px; 
   transition: max-height 0.3s ease-in;
 }
+
+/* Pagination styles */
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.page-item {
+  margin: 0 0.25rem;
+}
+
+.page-link {
+  display: block;
+  padding: 0.5rem 1rem;
+  border: 1px solid #4b5563;
+  border-radius: 0.375rem;
+  color: #d1d5db;
+}
+
+.page-link:hover {
+  background-color: #374151;
+}
+
+.active .page-link {
+  background-color: #4f46e5;
+  color: white;
+  border-color: #4f46e5;
+}
