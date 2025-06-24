@@ -196,3 +196,28 @@ export const getGamesByPlatform = async (id) => {
   console.log("Platforms: ", response.data.results);
   return response.data.results;
 };
+
+//Search Games Function
+export const getSearchedGames = async(query, limit = null, page = 1) => {
+  const params = {
+    key: RAWG_API_KEY,
+    search: query,
+    page: page,
+    ordering: "-rating"
+  }
+
+  if (limit) {
+    params.page_size = limit;
+  }
+
+  try {
+    const response = await axios.get(`${BASEURL}/games`, {params});
+    console.log("Search: ", response.data.results);
+    return response.data.results;
+  } catch (error) {
+    console.error("Error searching games:", error);
+    throw error;
+  }
+  
+
+}
