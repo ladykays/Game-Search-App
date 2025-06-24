@@ -185,18 +185,29 @@ export const getGamesByGenreSlug = async (slug, limit = null) => {
 };
 
 //Function to get games by platforms
-export const getGamesByPlatform = async (id) => {
+export const getGamesByPlatform = async (id, limit = null, page = 1) => {
   const params = {
     key: RAWG_API_KEY,
     platforms: id,
-    page_size: 40,
+    page: page,
+    page_size: limit,
     ordering: "-added",
     exclude_additions: true, // (Optional) Exclude DLCs
   };
 
-  const response = await axios.get(`${BASEURL}/games`, {params});
-  console.log("Platforms: ", response.data.results);
-  return response.data.results;
+  try {
+    const response = await axios.get(`${BASEURL}/games`, {params});
+    console.log("Platforms: ", response.data.results);
+    return {
+      results: response.data.results,
+        count: response.data.count, //total no of games
+        next: response.data.next, //url for next page
+        previous: response.data.previous, //ur from prev game
+    }
+  } catch (error) {
+    console.error("Error fetching games:", error);
+    throw error;
+  }
 };
 
 //Search Games Function
@@ -206,7 +217,8 @@ export const getSearchedGames = async(query, limit = null, page = 1) => {
     search: query,
     page: page,
     page_size: limit,
-    ordering: "-rating"
+    ordering: "-rating",
+    search_exact: true,
   }
 
   try {
