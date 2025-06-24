@@ -25,9 +25,9 @@ export const getHomePage = async(req, res) => {
     ])
     
     res.render("index.ejs", { 
-      topRated: topRated,
-      newReleases: newReleases,
-      upComing: upComing,
+      topRated: topRated.results,
+      newReleases: newReleases.results,
+      upComing: upComing.results,
       genres,
     });
 
@@ -41,27 +41,40 @@ export const getHomePage = async(req, res) => {
 // Results page
 export const getResultsPage = async (req, res) => {
   try {
-    let games;
+    let gamesData;
     let title;
+    const page = parseInt(req.query.page) || 1;
+    const limit = 21; // Items per page
+    const filter = req.query.filter || 'allGames';
     
-    if (req.query.filter === "newReleases") {
-      games = await getNewReleases();
+    if (filter === "newReleases") {
+      gamesData = await getNewReleases(limit, page);
       title = "New Releases";
     }
-    else if (req.query.filter === "topRated") {
-      games = await getTopRatedGames();
+    else if (filter === "topRated") {
+      gamesData = await getTopRatedGames(limit, page);
       title = "Top Rated Games";
     }
-    else if (req.query.filter === "upComing") {
-      games = (await getUpcomingGames()).filter(game => game.background_image); //only get games with a background image
+    else if (filter === "upComing") {
+      gamesData = (await getUpcomingGames(limit, page)).filter(game => game.background_image); //only get games with a background image
       title = "Upcoming Games";
     } else {
-      games = await getAllGames();
+      gamesData = await getAllGames(limit, page);
       title = "Browse All Games";
     }
+
+    const pagination = generatePagination(
+      page,
+      gamesData.count,
+      limit,
+      5 // visible pages
+    );
+
     res.render("results.ejs", {
-      games,
-      title
+      games: gamesData.results,
+      title,
+      filter,
+      ...pagination,
     });
     
     
@@ -143,22 +156,23 @@ export const getPlatformsPage = async(req, res) => {
     let gamesData;
     let title;
     const page = parseInt(req.query.page) || 1;
-    const limit = 20; // Items per page
+    const limit = 21; // Items per page
+    const filter = req.query.filter;
 
-    if (req.query.filter === "pcGames") {
+    if (filter === "pcGames") {
       gamesData = await getGamesByPlatform(4, limit, page);
       title = "PC Games"
-    } else if (req.query.filter === "playstation") {
+    } else if (filter === "playstation") {
       // Get games for all PlayStation platforms (PS1-PS5, PSP, Vita)
       const psPlatformIds = [27, 15, 16, 18, 187, 17, 19] //.join(',') transforms an array into a comma-separated string. This allows us to pass multiple platform IDs to the API in a single request.
       gamesData = await getGamesByPlatform(psPlatformIds.join(','), limit, page);
       title = "PlayStation Games"
-    } else if (req.query.filter === "xbox") {
+    } else if (filter === "xbox") {
       // Get games for all XBox platforms (Xbox One, Xbox Series S/X, Xbox 360, Xbox)
       const xboxPlatformIds = [1, 186, 14, 80 ];
       gamesData = await getGamesByPlatform(xboxPlatformIds.join(','), limit, page);
       title = "Xbox Games";
-    } else if (req.query.filter === "nintendo") {
+    } else if (filter === "nintendo") {
       // Get games for all Nintendo platforms (Switch, 3DS, DS, DSi, Wii U, Wii, GameCube, Nintendo 64,Game Boy Advance, Game Boy Color, Game Boy, SNES, NES) 
       const nintendoPlatformIds = [7, 8, 9, 13, 10, 11, 105, 83, 24, 43, 26, 79, 49];
       gamesData = await getGamesByPlatform(nintendoPlatformIds.join(','), limit, page); 

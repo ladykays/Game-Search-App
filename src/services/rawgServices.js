@@ -26,25 +26,31 @@ export const getNewReleases = async (limit = null, page = 1) => {
 
   const response = await axios.get(`${BASEURL}/games`, { params }); //url, endpoint and optional parameters
 
-  const newReleases = response.data.results;
+  
 
   //Uncomment this 👇 and  if you want filtered out data that does not display matured content
-  //const filteredNewReleases = exclude18Plus(newReleases); //filtered out data
+  //const filteredNewReleases = exclude18Plus(response.data.results); //filtered out data
 
-  //console.log("New Releases: ", newReleases.map(game => game.name));
+  //console.log("New Releases: ", response.data.results.map(game => game.name));
 
   // For unfiltered data
-  return newReleases;
+  return {
+    results: response.data.results,
+    count: response.data.count,
+    next: response.data.next,
+    previous: response.data.previous,
+  };
 
   //For filtered data
   //return filteredNewReleases //uncomment 👈 for filtered data
 };
 
 //Function to fetch Top Rated Games
-export const getTopRatedGames = async (limit = null) => {
+export const getTopRatedGames = async (limit = null, page = 1) => {
   const params = {
     key: RAWG_API_KEY,
     ordering: "-rating",
+    page: page,
   };
 
   if (limit) {
@@ -53,18 +59,24 @@ export const getTopRatedGames = async (limit = null) => {
     params.page_size = limit;
   }
   const response = await axios.get(`${BASEURL}/games`, { params });
-  const topRated = response.data.results;
+  //const topRated = response.data.results;
   //console.log("Top Rated: ", topRated.map(game => game.name));
-  const filteredTopRated = exclude18Plus(topRated);
+  //const filteredTopRated = exclude18Plus(topRated);
   //return filteredTopRated; // for filtered content
-  return topRated; //for non filtered content
+  return {
+    results: response.data.results,
+    count: response.data.count,
+    next: response.data.next,
+    previous: response.data.previous,
+  }; //for non filtered content
 };
 
 //Function to fetch Upcoming Games
-export const getUpcomingGames = async (limit = null) => {
+export const getUpcomingGames = async (limit = null, page = 1) => {
   const params = {
     key: RAWG_API_KEY,
     ordering: "released",
+    page: page,
   };
 
   if (limit) {
@@ -73,22 +85,31 @@ export const getUpcomingGames = async (limit = null) => {
   }
 
   const response = await axios.get(`${BASEURL}/games`, { params });
-  const upComing = response.data.results;
-  //console.log({upComing})
-  return upComing;
+
+  return {
+    results: response.data.results,
+    count: response.data.count,
+    next: response.data.next,
+    previous: response.data.previous,
+  };
 };
 
 //Function to fetch All Games
-export const getAllGames = async (limit = null) => {
+export const getAllGames = async (limit = null, page = 1) => {
   const params = {
     key: RAWG_API_KEY,
     ordering: "name",
+    page: page,
   };
 
   const response = await axios.get(`${BASEURL}/games`, { params });
-  const allGames = response.data.results;
 
-  return allGames;
+  return {
+    result: response.data.results,
+    count: response.data.count,
+    next: response.data.next,
+    previous: response.data.previous,
+  };
 };
 
 //Function to get a particular game page
