@@ -105,7 +105,7 @@ export const getAllGames = async (limit = null, page = 1) => {
   const response = await axios.get(`${BASEURL}/games`, { params });
 
   return {
-    result: response.data.results,
+    results: response.data.results,
     count: response.data.count,
     next: response.data.next,
     previous: response.data.previous,

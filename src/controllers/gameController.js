@@ -56,7 +56,12 @@ export const getResultsPage = async (req, res) => {
       title = "Top Rated Games";
     }
     else if (filter === "upComing") {
-      gamesData = (await getUpcomingGames(limit, page)).filter(game => game.background_image); //only get games with a background image
+      /* gamesData = (await getUpcomingGames(limit, page)).filter(game => game.background_image); //only get games with a background image */
+      const allUpcoming = await getUpcomingGames(limit, page);
+      gamesData = {
+        ...allUpcoming,
+        results: allUpcoming.results.filter(game => game.background_image) 
+      };
       title = "Upcoming Games";
     } else {
       gamesData = await getAllGames(limit, page);
