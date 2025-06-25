@@ -20,14 +20,31 @@ export const getHomePage = async(req, res) => {
     const [topRated, newReleases, upComing, genres] = await Promise.all([
       getTopRatedGames(6), // Returns 6 top rated games
       getNewReleases(6), // Returns 6 most recent releases
-      getUpcomingGames(6), // Returns 6 most recent upcoming games
+      //getUpcomingGames(6), // Returns 6 most recent upcoming games
       getGenres(3), //Get 3 genres
     ])
     
+    /* // Filter upcoming game to only those with images, then take first 6
+    const upcomingWithImages = upComing.results.filter(game => game.background_image).slice(0, 6) */
+
+    // Handling for upcoming games to ensure getting 6 games with images
+    let upcomingWithImages = []; //empty array to store upcoming games with images
+    let page = 1;
+
+    // Keep fetching until we have 6 games with images OR we've checked 5 pages (safety limit)
+    while (upcomingWithImages.length < 6 && page < 5) { 
+      const upComing = await getUpcomingGames(12, page); // Fetch a page of upcoming games (12 per page to increase chances of finding games with images)
+      const filtered = upComing.results.filter(game => game.background_image);
+      upcomingWithImages = [...upcomingWithImages, ...filtered];
+      page++;
+    }
+    // Take only the first 6 games that have images
+    upcomingWithImages = upcomingWithImages.slice(0, 6);
+
     res.render("index.ejs", { 
       topRated: topRated.results,
       newReleases: newReleases.results,
-      upComing: upComing.results,
+      upComing: upcomingWithImages,
       genres,
     });
 
