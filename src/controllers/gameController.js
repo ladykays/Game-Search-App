@@ -220,7 +220,7 @@ export const getSearchPage = async(req, res) => {
 
     res.render("search.ejs", {
       filteredGenre,
-      topRated: topRated,
+      topRated: topRated.results,
       genreGames: genreGames || [],
       schemaType: "WebPage",
       structuredData: JSON.stringify({
