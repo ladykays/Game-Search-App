@@ -46,6 +46,18 @@ export const getHomePage = async(req, res) => {
       newReleases: newReleases.results,
       upComing: upcomingWithImages,
       genres,
+      schemaType: "WebSite", // Basic schema type
+      structuredData: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "GameVerz",
+        "url": "https://www.gameverz.kre8tivedev.co.uk",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "/search-games?search={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      })
     });
 
   } catch (error) {
@@ -97,6 +109,21 @@ export const getResultsPage = async (req, res) => {
       title,
       filter,
       ...pagination,
+      schemaType: "ItemList", // Schema type appropriate for lists of games
+      structuredData: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        "itemListElement": gamesData.results.slice(0, 5).map((game, index) => ({
+          "@type": "ListItem",
+          "position": index + 1,
+          "item": {
+            "@type": "VideoGame",
+            "name": game.name,
+            "url": `https://www.gameverz.kre8tivedev.co.uk/game/${game.id}`,
+            "image": game.background_image
+          }
+        }))
+      })
     });
     
     
@@ -125,6 +152,23 @@ export const getGamePage = async(req, res) => {
     res.render("game.ejs", {
       gameDetails,
       screenshots: screenshots || [],// Ensure screenshots is always an array
+      schemaType: "VideoGame", // Specific schema for game pages
+      structuredData: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "VideoGame",
+        "name": gameDetails.name,
+        "url": `https://www.gameverz.kre8tivedev.co.uk/game/${id}`,
+        "description": gameDetails.description_raw || "Explore this game on GameVerz",
+        "image": gameDetails.background_image,
+        "genre": gameDetails.genres?.map(g => g.name) || [],
+        "gamePlatform": gameDetails.platforms?.map(p => p.platform.name) || [],
+        "aggregateRating": gameDetails.rating ? {
+          "@type": "AggregateRating",
+          "ratingValue": gameDetails.rating,
+          "ratingCount": gameDetails.ratings_count || 0
+        } : undefined,
+        "datePublished": gameDetails.released
+      })
     })
 
   } catch (error) {
@@ -137,7 +181,21 @@ export const getGamePage = async(req, res) => {
 export const getGenresPage = async(req, res) => {
   try {
     const genres = await getGenres();
-    res.render("genres.ejs", {genres})
+    res.render("genres.ejs", {
+      genres,
+      schemaType: "CollectionPage", // Appropriate for category listings
+      structuredData: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": "Game Genres",
+        "description": "Browse games by genre on GameVerz",
+        "hasPart": genres.map(genre => ({
+          "@type": "CollectionPage",
+          "name": genre.name,
+          "url": `https://www.gameverz.kre8tivedev.co.uk/genres?genre=${genre.slug}`
+        }))
+      })
+    })
   } catch (error) {
     console.log("Error fetching genres", error)
     res.status(500).send(`Error fetching genres: ${error.message}`)
@@ -162,8 +220,15 @@ export const getSearchPage = async(req, res) => {
 
     res.render("search.ejs", {
       filteredGenre,
-      topRated: topRated,
+      topRated: topRated.results,
       genreGames: genreGames || [],
+      schemaType: "WebPage",
+      structuredData: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": `Games in ${filteredGenre.name} genre`,
+        "description": `Browse ${filteredGenre.name} games on GameVerz`
+      })
     } )
 
   } catch (error) {
@@ -213,6 +278,17 @@ export const getPlatformsPage = async(req, res) => {
       title,
       ...pagination,
       filter: req.query.filter,
+      schemaType: "CollectionPage",
+      structuredData: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": `${title} on GameVerz`,
+        "description": `Browse ${title} on GameVerz`,
+        "about": {
+          "@type": "Game",
+          "gamePlatform": title.replace(" Games", "")
+        }
+      })
     });
   } catch (error) {
     console.log("Error fetching requested games", error)
@@ -244,7 +320,24 @@ export const searchGames = async (req, res) => {
       title: `Search Results for "${search}"`,
       games,
       queryParams: search, 
-      ...pagination //spread all pagination ppties
+      ...pagination, //spread all pagination ppties
+      schemaType: "ItemList",
+      structuredData: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        "name": `Search results for "${search}"`,
+        "itemListElement": games.slice(0, 5).map((game, index) => ({
+          "@type": "ListItem",
+          "position": index + 1,
+          "item": {
+            "@type": "VideoGame",
+            "name": game.name,
+            "url": `https://www.gameverz.kre8tivedev.co.uk/game/${game.id}`,
+            "image": game.background_image
+          }
+        }))
+      })
+
     })
 
   } catch (error) {
