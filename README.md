@@ -44,7 +44,7 @@ Users can filter, browse, and view detailed game information—all powered by th
 This project is open source and available under the MIT License.
 
 ## 🌐 Live Application
-[GameVerz](https://)
+[GameVerz](https://www.gameverz.kre8tivedev.co.uk)
 
 ## Credits
 Game data provided by the [RAWG Video Games Database API](https://rawg.io/apidocs)
