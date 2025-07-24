@@ -17,7 +17,7 @@ import { generatePagination } from "../utils/pagenation.js";
 //Homepage
 export const getHomePage = async(req, res) => {
   try {
-    const [topRated, newReleases, upComing, genres] = await Promise.all([
+    const [topRated, newReleases, /* upComing, */ genres] = await Promise.all([
       getTopRatedGames(6), // Returns 6 top rated games
       getNewReleases(6), // Returns 6 most recent releases
       //getUpcomingGames(6), // Returns 6 most recent upcoming games

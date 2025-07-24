@@ -147,7 +147,7 @@
         <% if (genres && genres.length > 0) { %>
         <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
           <% genres.forEach((genre) => { %>
-          <a class="block group" href="/search?genre=<%= genre.name %>">
+          <a class="block group" href="/search?genre=<%= genre.slug %>">
             <div class="relative h-64 rounded-lg overflow-hidden shadow-md">
               <img
                 src="<%= genre.image_background %>"
